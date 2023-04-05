@@ -1097,6 +1097,9 @@ CODE
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
+#include <iostream>
+void DefaultImGuiFailAssert(const char* expr_str, const char* file, int line, const std::string& msg) {std::cout << "XD" << std::endl;}
+void (*g_ImGuiFailAssert)(const char* expr_str, const char* file, int line, const std::string& msg) = DefaultImGuiFailAssert;
 
 // System includes
 #include <stdio.h>      // vsnprintf, sscanf, printf

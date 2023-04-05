@@ -16,7 +16,15 @@
 
 //---- Define assertion handler. Defaults to calling assert().
 // If your macro uses multiple statements, make sure is enclosed in a 'do { .. } while (0)' block so it can be used as a single statement.
-//#define IM_ASSERT(_EXPR)  MyAssert(_EXPR)
+
+#include <string>
+extern void (*g_ImGuiFailAssert)(const char* expr_str, const char* file, int line, const std::string& msg);
+#define IM_ASSERT(_EXPR)                                                                \
+    do {                                                                                \
+        if (!(_EXPR)) {                                                                 \
+            g_ImGuiFailAssert(#_EXPR, __FILE__, __LINE__, "Failed ImGui assert");       \
+        }                                                                               \
+    } while (false)
 //#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
 
 //---- Define attributes of all API symbols declarations, e.g. for DLL under Windows
