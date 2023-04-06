@@ -1097,9 +1097,9 @@ CODE
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
-#include <iostream>
-void DefaultImGuiFailAssert(const char* expr_str, const char* file, int line, const std::string& msg) {std::cout << "XD" << std::endl;}
-void (*g_ImGuiFailAssert)(const char* expr_str, const char* file, int line, const std::string& msg) = DefaultImGuiFailAssert;
+void ::ImGui::DefaultFailAssert(const char* expr_str, const char* file, int line, const std::string& msg) {}
+void (*::ImGui::g_ImGuiFailAssert)(const char* expr_str, const char* file, int line, const std::string& msg) = ::ImGui::DefaultFailAssert;
+ImGui::ExternalSettings ImGui::g_ExternalSettings;
 
 // System includes
 #include <stdio.h>      // vsnprintf, sscanf, printf
@@ -12032,7 +12032,7 @@ bool ImGui::BeginTooltipEx(ImGuiTooltipFlags tooltip_flags, ImGuiWindowFlags ext
             SetNextWindowPos(tooltip_pos, ImGuiCond_None, tooltip_pivot);
         }
 
-        SetNextWindowBgAlpha(g.Style.Colors[ImGuiCol_PopupBg].w * 0.60f);
+        SetNextWindowBgAlpha(g.Style.Colors[ImGuiCol_PopupBg].w * g_ExternalSettings.DragAndDropTooltipAlphaMultiplyer);
         //PushStyleVar(ImGuiStyleVar_Alpha, g.Style.Alpha * 0.60f); // This would be nice but e.g ColorButton with checkboard has issue with transparent colors :(
         tooltip_flags |= ImGuiTooltipFlags_OverridePrevious;
     }

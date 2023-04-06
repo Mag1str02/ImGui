@@ -18,11 +18,15 @@
 // If your macro uses multiple statements, make sure is enclosed in a 'do { .. } while (0)' block so it can be used as a single statement.
 
 #include <string>
-extern void (*g_ImGuiFailAssert)(const char* expr_str, const char* file, int line, const std::string& msg);
+
+namespace ImGui{
+    void DefaultFailAssert(const char* expr_str, const char* file, int line, const std::string& msg);
+    extern void (*g_ImGuiFailAssert)(const char* expr_str, const char* file, int line, const std::string& msg);
+}
 #define IM_ASSERT(_EXPR)                                                                \
     do {                                                                                \
         if (!(_EXPR)) {                                                                 \
-            g_ImGuiFailAssert(#_EXPR, __FILE__, __LINE__, "Failed ImGui assert");       \
+            ::ImGui::g_ImGuiFailAssert(#_EXPR, __FILE__, __LINE__, "Failed ImGui assert");       \
         }                                                                               \
     } while (false)
 //#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
