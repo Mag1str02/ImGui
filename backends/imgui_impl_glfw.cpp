@@ -821,16 +821,16 @@ static void ImGui_ImplGlfw_UpdateMouseData()
         // - [X] GLFW backend correctly reports this regardless of another viewport behind focused and dragged from (we need this to find a useful drag and drop target).
         // FIXME: This is currently only correct on Win32. See what we do below with the WM_NCHITTEST, missing an equivalent for other systems.
         // See https://github.com/glfw/glfw/issues/1236 if you want to help in making this a GLFW feature.
-#if GLFW_HAS_MOUSE_PASSTHROUGH
-        const bool window_no_input = (viewport->Flags & ImGuiViewportFlags_NoInputs) != 0;
-        glfwSetWindowAttrib(window, GLFW_MOUSE_PASSTHROUGH, window_no_input);
-#endif
-#if GLFW_HAS_MOUSE_PASSTHROUGH || GLFW_HAS_WINDOW_HOVERED
-        if (glfwGetWindowAttrib(window, GLFW_HOVERED))
-            mouse_viewport_id = viewport->ID;
-#else
+// #if GLFW_HAS_MOUSE_PASSTHROUGH
+//         const bool window_no_input = (viewport->Flags & ImGuiViewportFlags_NoInputs) != 0;
+//         glfwSetWindowAttrib(window, GLFW_MOUSE_PASSTHROUGH, window_no_input);
+// #endif
+// #if GLFW_HAS_MOUSE_PASSTHROUGH || GLFW_HAS_WINDOW_HOVERED
+//         if (glfwGetWindowAttrib(window, GLFW_HOVERED))
+//             mouse_viewport_id = viewport->ID;
+// #else
         // We cannot use bd->MouseWindow maintained from CursorEnter/Leave callbacks, because it is locked to the window capturing mouse.
-#endif
+// #endif
     }
 
     if (io.BackendFlags & ImGuiBackendFlags_HasMouseHoveredViewport)
